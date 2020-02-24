@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "896465277570",
+    "firebase_url": "https://cablocationtracker.firebaseio.com",
+    "project_id": "cablocationtracker",
+    "storage_bucket": "cablocationtracker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:896465277570:android:9e561b73d2ecf220479a9b",
+        "android_client_info": {
+          "package_name": "com.example.cablocationtracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "896465277570-omhamcakf08ql7uoe0i464kkumrdlukg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cablocationtracker",
+            "certificate_hash": "012116f9633be35e1acfc8f0dc3960dcaf3884fa"
+          }
+        },
+        {
+          "client_id": "896465277570-tmfrqpv8e7bepua6tbusujf6bi6iejtu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeoVqqT-J0KsHvWwSfBN_JJzxbINrK6w8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "896465277570-tmfrqpv8e7bepua6tbusujf6bi6iejtu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
