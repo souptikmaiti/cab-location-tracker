@@ -24,6 +24,7 @@ class LocationForegroundService: Service() {
 
     var locationRequest: LocationRequest? = null
     var fusedLocationProviderClient: FusedLocationProviderClient? = null
+    var locationPendingIntent: PendingIntent? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -53,11 +54,12 @@ class LocationForegroundService: Service() {
 
     private fun updateLocation() {
         buildLocationRequest()
+        locationPendingIntent = buildLocationPendingIntent()
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        fusedLocationProviderClient?.requestLocationUpdates(locationRequest, getPendingIntent())
+        fusedLocationProviderClient?.requestLocationUpdates(locationRequest, locationPendingIntent)
     }
 
-    private fun getPendingIntent(): PendingIntent? {
+    private fun buildLocationPendingIntent(): PendingIntent? {
         val intent = Intent(this, LocationReceiver::class.java)
         intent.action = LocationReceiver.ACTION_LOCATION_UPDATE
         return PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -74,9 +76,10 @@ class LocationForegroundService: Service() {
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
-    
+
     override fun onDestroy() {
         super.onDestroy()
+        fusedLocationProviderClient?.removeLocationUpdates(locationPendingIntent)
     }
 
     private fun createNotificationChannel() {
@@ -86,7 +89,7 @@ class LocationForegroundService: Service() {
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             val manager = getSystemService(NotificationManager::class.java)
-            manager.createNotificationChannel(serviceChannel)
+            manager?.createNotificationChannel(serviceChannel)
         }
     }
 }
