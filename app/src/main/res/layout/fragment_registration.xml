@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.landing.RegistrationFragment">
+    tools:context=".ui.landing.registration.RegistrationFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/t_layout_email"
@@ -31,6 +31,30 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/t_layout_username"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:hint="username"
+        app:hintAnimationEnabled="true"
+        app:hintEnabled="true"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineDown"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+        app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@+id/t_layout_email"
+        app:layout_constraintVertical_bias=".02">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/t_layout_password"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -44,8 +68,8 @@
         app:layout_constraintBottom_toTopOf="@+id/guidelineDown"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
         app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/t_layout_email"
-        app:layout_constraintVertical_bias=".05"
+        app:layout_constraintTop_toBottomOf="@+id/t_layout_username"
+        app:layout_constraintVertical_bias=".02"
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText

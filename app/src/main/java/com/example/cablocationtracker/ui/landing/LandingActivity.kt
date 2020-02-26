@@ -2,9 +2,10 @@ package com.example.cablocationtracker.ui.landing
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import com.example.cablocationtracker.R
 import com.example.cablocationtracker.data.local.UserPreference
-import kotlinx.android.synthetic.main.activity_landing.*
+import com.example.cablocationtracker.ui.landing.login.LoginFragment
 
 class LandingActivity : AppCompatActivity() {
     lateinit var userPreference: UserPreference
@@ -12,12 +13,17 @@ class LandingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_landing)
         userPreference = UserPreference()
-        val fragmentManager = supportFragmentManager
-        val transaction = fragmentManager.beginTransaction()
+
         if(userPreference.getIsLoggedIn(this)){
 
         }else{
-            transaction.replace(R.id.fragmentContainer, LoginFragment.newInstance()).commit()
+            showFragment(LoginFragment.newInstance())
         }
+    }
+
+    fun showFragment(fragment: Fragment){
+        val fragmentManager = supportFragmentManager
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.fragmentContainer, fragment).commit()
     }
 }
