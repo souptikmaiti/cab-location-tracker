@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "896465277570-sktbst01e5sg4kuc890ef3ut8kps572i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cablocationtracker",
+            "certificate_hash": "bc60d1d8704ae34274794bf82ea5d16ff3bad3e9"
+          }
+        },
+        {
           "client_id": "896465277570-omhamcakf08ql7uoe0i464kkumrdlukg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

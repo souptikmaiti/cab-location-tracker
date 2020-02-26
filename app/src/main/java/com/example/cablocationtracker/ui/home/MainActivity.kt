@@ -1,4 +1,4 @@
-package com.example.cablocationtracker.ui
+package com.example.cablocationtracker.ui.home
 
 import android.Manifest
 import android.app.job.JobScheduler
@@ -42,7 +42,9 @@ class MainActivity : AppCompatActivity() {
                 && checkSelfPermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED){
                 startService()
             }else{
-                requestPermissions(permissionlist,REQUEST_PERMISSION)
+                requestPermissions(permissionlist,
+                    REQUEST_PERMISSION
+                )
             }
             return
         }
@@ -50,7 +52,9 @@ class MainActivity : AppCompatActivity() {
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
                 startService()
             }else{
-                requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_PERMISSION)
+                requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    REQUEST_PERMISSION
+                )
             }
             return
         }

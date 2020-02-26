@@ -2,11 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.cablocationtracker">
 
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -15,17 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <receiver
-            android:name=".broadcastreceiver.LocationReceiver"
-            android:enabled="true"
-            android:exported="true">
-        </receiver>
-
-        <service android:name=".foregroundservice.LocationForegroundService"
-            android:enabled="true"
-            android:exported="true"/>
-
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".ui.landing.LandingActivity"></activity>
+        <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,6 +24,17 @@
             </intent-filter>
         </activity>
 
+        <receiver
+            android:name=".broadcastreceiver.LocationReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name=".foregroundservice.LocationForegroundService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".ui.home.MainActivity"></activity>
     </application>
 
 </manifest>

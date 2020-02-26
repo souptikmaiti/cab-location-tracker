@@ -7,7 +7,7 @@ import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import com.example.cablocationtracker.broadcastreceiver.LocationReceiver
-import com.example.cablocationtracker.ui.MainActivity
+import com.example.cablocationtracker.ui.home.MainActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
