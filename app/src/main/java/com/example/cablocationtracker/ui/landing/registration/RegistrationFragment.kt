@@ -12,8 +12,11 @@ import androidx.lifecycle.ViewModelProviders
 
 import com.example.cablocationtracker.R
 import com.example.cablocationtracker.data.models.User
+import com.example.cablocationtracker.ui.base.BaseActivity
+import com.example.cablocationtracker.ui.base.BaseFragment
 import com.example.cablocationtracker.ui.landing.LandingActivity
 import com.example.cablocationtracker.ui.landing.login.LoginFragment
+import com.example.cablocationtracker.util.Toaster
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_registration.*
 import kotlinx.coroutines.CoroutineScope
@@ -21,9 +24,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
-class RegistrationFragment : Fragment() {
+class RegistrationFragment : BaseFragment() {
 
     lateinit var viewModel: RegistrationViewModel
+    lateinit var landingActivity: LandingActivity
     var email: String = ""
     var password: String = ""
 
@@ -44,6 +48,7 @@ class RegistrationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        landingActivity = activity as LandingActivity
         initViewModel()
         init()
     }
@@ -54,7 +59,7 @@ class RegistrationFragment : Fragment() {
         }
 
         tv_login.setOnClickListener {
-            (activity as LandingActivity).showFragment(LoginFragment.newInstance())
+            landingActivity.showFragment(LoginFragment.newInstance(), true, false)
         }
     }
 
@@ -68,27 +73,32 @@ class RegistrationFragment : Fragment() {
         email = et_email.text.toString()
         password = et_password.text.toString()
         if(!email.isNullOrBlank() && !password.isNullOrBlank()){
+            landingActivity.showProgressDialog("Registration in Progress...")
             viewModel.doRegister(et_email.text.toString(), et_password.text.toString())
         }
 
     }
 
     private fun setRegistration(status: String){
+        landingActivity.hideProgressDialog()
         if(status.equals("Registration Successful")){
+            Toaster.showShort(context!!,"Registration Successful")
             val user = User(email = email, id = null, isSuperUser = false, mobile = et_mobile.text.toString()
             ,userName = et_username.text.toString())
-            Toast.makeText(context, "Registration Successful", Toast.LENGTH_SHORT).show()
+            landingActivity.showProgressDialog("Creating user...")
             viewModel.addUser(user)
         }else{
-            Toast.makeText(context, status, Toast.LENGTH_SHORT).show()
+            Toaster.showShort(context!!, status)
         }
     }
 
     private fun setAddUser(status: String){
+        landingActivity.hideProgressDialog()
         if(status.equals("User Added Successfully")){
-            Toast.makeText(context, "User Added Successfully", Toast.LENGTH_SHORT).show()
+            Toaster.showShort(context!!, "User Added Successfully")
+            landingActivity.navigateToHome()
         }else{
-            Toast.makeText(context, status, Toast.LENGTH_SHORT).show()
+            Toaster.showShort(context!!, status)
         }
     }
 

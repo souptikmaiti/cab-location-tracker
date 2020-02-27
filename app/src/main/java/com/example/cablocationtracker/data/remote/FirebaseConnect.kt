@@ -24,9 +24,17 @@ class FirebaseConnect {
         FirebaseFirestore.getInstance()
     }
 
-    suspend fun loginUser(email: String, password: String): FirebaseUser?{
+    fun getCurrentUser(): FirebaseUser? = firebaseAuth.currentUser
+
+    fun signOut() = firebaseAuth.signOut()
+
+    suspend fun getCurrentUserInfo(uid: String): User? {
+        val userInfo = fireStore.collection(USER_REF).document(uid).get().await()
+        return userInfo.toObject(User::class.java)
+    }
+
+    suspend fun loginUser(email: String, password: String){
         firebaseAuth.signInWithEmailAndPassword(email, password).await()
-        return firebaseAuth.currentUser ?: throw FirebaseAuthException("", "")
     }
 
     suspend fun registerUser(email: String, password:String){
@@ -34,8 +42,8 @@ class FirebaseConnect {
     }
 
     suspend fun addUser(user:User){
-        val uid = firebaseAuth.currentUser?.uid
-        val email = firebaseAuth.currentUser?.email
+        val uid = getCurrentUser()?.uid
+        val email = getCurrentUser()?.email
         if(uid != null){
             user.id = uid
             user.email = email
@@ -44,9 +52,14 @@ class FirebaseConnect {
     }
 
     suspend fun updateLocation(smallLocation: SmallLocation){
-        val uid = firebaseAuth.currentUser?.uid
+        val uid = getCurrentUser()?.uid
         if(uid != null){
-            fireStore.collection(LOCATION_REF).document(uid).set(smallLocation, SetOptions.merge())
+            fireStore.collection(LOCATION_REF).document(uid).set(smallLocation, SetOptions.merge()).await()
         }
+    }
+
+    suspend fun getLocation(uid:String): SmallLocation? {
+        val locationInfo = fireStore.collection(LOCATION_REF).document(uid).get().await()
+        return locationInfo.toObject(SmallLocation::class.java)
     }
 }

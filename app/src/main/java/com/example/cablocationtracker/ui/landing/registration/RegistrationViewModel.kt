@@ -6,12 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.example.cablocationtracker.data.models.User
 import com.example.cablocationtracker.repository.Repository
+import com.example.cablocationtracker.ui.base.BaseViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class RegistrationViewModel(): ViewModel() {
+class RegistrationViewModel(): BaseViewModel() {
 
     var _fetchReg = MutableLiveData("")
     var _addUser = MutableLiveData("")

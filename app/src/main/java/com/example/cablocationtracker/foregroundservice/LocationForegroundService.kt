@@ -7,7 +7,7 @@ import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import com.example.cablocationtracker.broadcastreceiver.LocationReceiver
-import com.example.cablocationtracker.ui.home.MainActivity
+import com.example.cablocationtracker.ui.home.HomeActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
@@ -33,7 +33,7 @@ class LocationForegroundService: Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val input = intent!!.getStringExtra("inputExtra")
         createNotificationChannel()
-        val notificationIntent = Intent(this, MainActivity::class.java)
+        val notificationIntent = Intent(this, HomeActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0)
         val notification: Notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("Location Tracker")

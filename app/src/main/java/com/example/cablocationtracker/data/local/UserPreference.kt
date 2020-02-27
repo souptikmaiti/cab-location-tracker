@@ -6,25 +6,36 @@ import com.example.cablocationtracker.util.PrefUtil
 class UserPreference {
     companion object{
         val USER_NAME = "USER_NAME"
-        val PASSWORD = "PASSWORD"
+        val USER_EMAIL = "USER_EMAIL"
+        val USER_ID = "USER_ID"
         val IS_LOGGED_IN = "IS_LOGGED_IN"
         val IS_SUPER_USER = "IS_SUPER_USER"
+        val MOBILE_NUMBER = "MOBILE_NUMBER"
     }
 
-    fun setUserName(context: Context, userName: String) = PrefUtil.setString(context, USER_NAME, userName)
+    fun setUserName(userName: String) = PrefUtil.setString(USER_NAME, userName)
 
-    fun getUserName(context: Context): String? = PrefUtil.getString(context, USER_NAME, "")
+    fun setUserEmail(userEmail: String) = PrefUtil.setString(USER_EMAIL, userEmail)
 
-    fun setPassword(context: Context, password: String) = PrefUtil.setString(context, PASSWORD, password)
+    fun setUserId(userid: String) = PrefUtil.setString(USER_ID, userid)
 
-    fun getPassword(context: Context): String? = PrefUtil.getString(context, PASSWORD, "")
+    fun setMobileNumber(mobile: String) = PrefUtil.setString(MOBILE_NUMBER, mobile)
 
-    fun setIsLoggedIn(context: Context, isLoggedIn: Boolean) = PrefUtil.setBoolean(context, IS_LOGGED_IN, isLoggedIn)
+    fun setIsLoggedIn(isLoggedIn: Boolean) = PrefUtil.setBoolean(IS_LOGGED_IN, isLoggedIn)
 
-    fun getIsLoggedIn(context: Context): Boolean = PrefUtil.getBoolean(context, IS_LOGGED_IN)
+    fun setIsSuperUser(isSuperUser: Boolean) = PrefUtil.setBoolean(IS_SUPER_USER, isSuperUser)
 
-    fun setIsSuperUser(context: Context, isSuperUser: Boolean) = PrefUtil.setBoolean(context, IS_SUPER_USER, isSuperUser)
 
-    fun getIsSuperUser(context: Context): Boolean = PrefUtil.getBoolean(context, IS_SUPER_USER)
+    fun getUserName(): String? = PrefUtil.getString(USER_NAME, "")
+
+    fun getUserEmail(): String? = PrefUtil.getString(USER_EMAIL, "")
+
+    fun getUserId(): String? = PrefUtil.getString(USER_ID, "")
+
+    fun getMobileNumber(): String? = PrefUtil.getString(MOBILE_NUMBER, "")
+
+    fun getIsLoggedIn(): Boolean = PrefUtil.getBoolean(IS_LOGGED_IN)
+
+    fun getIsSuperUser(): Boolean = PrefUtil.getBoolean(IS_SUPER_USER)
 
 }
