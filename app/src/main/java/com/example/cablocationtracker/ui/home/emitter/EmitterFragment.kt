@@ -48,6 +48,7 @@ class EmitterFragment : Fragment() {
         homeActivity = activity as HomeActivity
         jobScheduler = homeActivity!!.getSystemService(AppCompatActivity.JOB_SCHEDULER_SERVICE) as JobScheduler
 
+        tv_welcome.text = "Welcome " + homeActivity.currentUser?.userName
         btn_start.setOnClickListener {
             startService()
         }
