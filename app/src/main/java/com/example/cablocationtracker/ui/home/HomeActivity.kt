@@ -10,12 +10,14 @@ import com.example.cablocationtracker.data.models.User
 import com.example.cablocationtracker.ui.base.BaseActivity
 import com.example.cablocationtracker.ui.home.emitter.EmitterFragment
 import com.example.cablocationtracker.ui.home.observer.ObserverFragment
+import com.example.cablocationtracker.ui.home.observer.UserListFragment
 
 
 class HomeActivity : BaseActivity() {
 
     lateinit var homeViewModel: HomeViewModel
     var currentUser: User ?= null
+    var targetUser: User ?= null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -40,9 +42,13 @@ class HomeActivity : BaseActivity() {
         homeViewModel.saveUserdataLocally(usr)
         val isSuperuser = usr.isSuperUser ?: false
         if(isSuperuser){
-            showFragment(ObserverFragment.newInstance(), true, false)
+            showFragment(UserListFragment.newInstance(), false, false)
         }else{
             showFragment(EmitterFragment.newInstance(), true, false)
         }
+    }
+
+    fun modifyTargetUser(targetUsr: User){
+        targetUser = targetUsr
     }
 }

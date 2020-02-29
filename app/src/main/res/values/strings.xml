@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">CabLocationTracker</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="api_key">AIzaSyA0WBPXcKzX6-DKVj0vOJN3QG0zIPWQO_Y</string>
 </resources>

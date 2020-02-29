@@ -20,6 +20,7 @@ class HomeViewModel: ViewModel() {
             CoroutineScope(Dispatchers.IO).launch {
                 try{
                     _currentUser.postValue(repo.getUserInfo(firbaseUser.uid))
+
                 }catch (e: Exception){
                     _errorMessage.postValue(e.message.toString())
                 }

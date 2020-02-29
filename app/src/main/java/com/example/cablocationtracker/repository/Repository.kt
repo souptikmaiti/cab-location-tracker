@@ -33,7 +33,9 @@ class Repository private constructor(){
 
     suspend fun getUserInfo(uid: String) = firebaseConnect.getCurrentUserInfo(uid)
 
-    suspend fun getLocation(uid: String) = firebaseConnect.getLocation(uid)
+    fun getUserList() = firebaseConnect.getAllUsers()
+
+    fun getLocation(uid: String) = firebaseConnect.getLocation(uid)
 
     fun saveUserInfoLocally(userInfo: User){
         userPreference.setUserName(userInfo.userName ?: "")
