@@ -30,7 +30,6 @@ class ObserverFragment : BaseFragment() {
     lateinit var observerViewModel: ObserverViewModel
     var googleMap: GoogleMap ?= null
     var mapView: MapView?= null
-    var startObserving = false
     lateinit var targetUser: User
 
     companion object {
@@ -66,30 +65,27 @@ class ObserverFragment : BaseFragment() {
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if(ActivityCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-                startObserving = true
+                initViewModel()
             }else{
                 requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_REQUEST)
             }
         }
-        initViewModel()
-        init()
-        if(homeActivity != null && homeActivity.targetUser != null ) {
-            targetUser = homeActivity.targetUser!!
-            observerViewModel.getLocation(targetUser.id!!)
-        }
-    }
-
-    private fun init() {
 
     }
 
     private fun initViewModel() {
         observerViewModel = ViewModelProviders.of(this).get(ObserverViewModel::class.java)
         observerViewModel._locationData.observe(viewLifecycleOwner, Observer {
-            if(startObserving == true) {
-                showLocation(it)
-            }
+            showLocation(it)
         })
+        startObserving()
+    }
+
+    private fun startObserving() {
+        if(homeActivity != null && homeActivity.targetUser != null ) {
+            targetUser = homeActivity.targetUser!!
+            observerViewModel.getLocation(targetUser.id!!)
+        }
     }
 
     private fun showLocation(loc: SmallLocation?) {
@@ -139,10 +135,9 @@ class ObserverFragment : BaseFragment() {
         when(requestCode){
             LOCATION_REQUEST -> {
                 if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    startObserving = true
+                    initViewModel()
                 }else{
                     Toaster.showLong(context!!, "Permission required")
-                    startObserving = false
                 }
             }
         }
