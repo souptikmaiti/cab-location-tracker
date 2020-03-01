@@ -38,7 +38,7 @@ class LocationReceiver : BroadcastReceiver() {
 
         if (latitude != null && longitude != null){
             updateLocationInFirebase(latitude!!, longitude!!)
-            Toast.makeText(context, "latitude=$latitude ,longitude=$longitude",Toast.LENGTH_SHORT).show()
+            //Toast.makeText(context, "latitude=$latitude ,longitude=$longitude",Toast.LENGTH_SHORT).show()
         }
     }
 

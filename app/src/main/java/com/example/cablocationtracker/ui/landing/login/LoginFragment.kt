@@ -71,10 +71,10 @@ class LoginFragment : BaseFragment() {
     private fun setLogin(status: String?) {
         landingActivity.hideProgressDialog()
         if(status.equals("log in successful")){
-            Toaster.showShort(context!!, status ?: "")
+            Toaster.showShort(context!!, status ?: "log in successful")
             landingActivity.navigateToHome()
         }else{
-            Toaster.showShort(context!!,status ?: "")
+            Toaster.showShort(context!!,status ?: "log in failed")
         }
     }
 

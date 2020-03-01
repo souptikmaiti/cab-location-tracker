@@ -28,6 +28,7 @@ class HomeActivity : BaseActivity() {
 
     private fun init() {
         homeViewModel.getUserData()
+        this.showProgressDialog("Loading User Data...")
     }
 
     private fun initViewModel() {
@@ -38,6 +39,7 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun setUser(usr: User){
+        this.hideProgressDialog()
         currentUser = usr
         homeViewModel.saveUserdataLocally(usr)
         val isSuperuser = usr.isSuperUser ?: false

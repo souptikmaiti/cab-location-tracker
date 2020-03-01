@@ -7,11 +7,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.cablocationtracker.R
 import com.example.cablocationtracker.data.models.User
+import com.example.cablocationtracker.ui.base.BaseActivity
 import com.example.cablocationtracker.ui.home.HomeActivity
 import com.example.cablocationtracker.ui.landing.LandingActivity
 import com.example.cablocationtracker.util.Toaster
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : BaseActivity() {
     lateinit var splashViewModel: SplashViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,17 +38,24 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun navigateToLogin(str: String?) {
-        Toaster.showShort(this, str ?: "")
+        //Toaster.showShort(this, str ?: "")
+        this.showProgressDialog("Loading...")
         startActivity(Intent(this, LandingActivity::class.java))
         finish()
     }
 
     private fun navigateToHome(u: User) {
+        this.showProgressDialog("Loading...")
         if(!u.id.isNullOrBlank()){
             startActivity(Intent(this, HomeActivity::class.java))
             finish()
         }else{
             navigateToLogin("user id null")
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        this.hideProgressDialog()
     }
 }

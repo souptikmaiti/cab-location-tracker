@@ -20,9 +20,9 @@ open class BaseActivity: AppCompatActivity() {
     var currentFragment: Fragment? = null
     lateinit var progressDialog: Dialog
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-        progressDialog = getProgressDialog(this)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        progressDialog = buildProgressDialog(this)
     }
 
     override fun onStart() {
@@ -38,7 +38,12 @@ open class BaseActivity: AppCompatActivity() {
         hideProgressDialog()
     }
 
-    private fun getProgressDialog(context: Context): Dialog {
+    override fun onDestroy() {
+        super.onDestroy()
+        hideProgressDialog()
+    }
+
+    private fun buildProgressDialog(context: Context): Dialog {
         val dialog = Dialog(context)
         val inflate = LayoutInflater.from(context).inflate(R.layout.progress_layout, null)
         dialog.setContentView(inflate)
@@ -51,13 +56,13 @@ open class BaseActivity: AppCompatActivity() {
 
     fun showProgressDialog(message: String) {
         try {
-            hideProgressDialog()
+            //hideProgressDialog()
             val tvTitle= progressDialog.findViewById<TextView>(R.id.tv_progress_title)
             tvTitle.text = message
             progressDialog.setCancelable(false)
             progressDialog.show()
         } catch (ex: Exception) {
-            Log.e("TAG", "progress dialog error")
+            Log.e("TAG", ex.message.toString())
         }
     }
 
