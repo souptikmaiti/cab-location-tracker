@@ -68,8 +68,8 @@ class LocationForegroundService: Service() {
     private fun buildLocationRequest() {
         locationRequest = LocationRequest()
         locationRequest?.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        locationRequest?.interval = 60 * 1000
-        locationRequest?.fastestInterval = 30 * 1000
+        locationRequest?.interval = 10 * 1000
+        locationRequest?.fastestInterval = 5 * 1000
         //locationRequest?.smallestDisplacement = 10f
     }
 

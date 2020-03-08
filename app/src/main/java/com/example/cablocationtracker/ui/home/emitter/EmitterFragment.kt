@@ -2,25 +2,30 @@ package com.example.cablocationtracker.ui.home.emitter
 
 
 import android.Manifest
+import android.app.job.JobInfo
 import android.app.job.JobScheduler
+import android.content.ComponentName
+import android.content.Context.JOB_SCHEDULER_SERVICE
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.fragment.app.Fragment
 import com.example.cablocationtracker.R
 import com.example.cablocationtracker.foregroundservice.LocationForegroundService
+import com.example.cablocationtracker.scheduler.CabScheduler
 import com.example.cablocationtracker.ui.home.HomeActivity
 import com.example.cablocationtracker.util.Toaster
 import kotlinx.android.synthetic.main.fragment_emitter.*
+
 
 class EmitterFragment : Fragment() {
 
@@ -31,6 +36,7 @@ class EmitterFragment : Fragment() {
         }
         const val REQUEST_PERMISSION = 111
         val TAG = EmitterFragment::class.java.simpleName
+        val JOB_ID = 56
     }
     lateinit var jobScheduler: JobScheduler
     lateinit var homeActivity: HomeActivity
@@ -50,17 +56,20 @@ class EmitterFragment : Fragment() {
 
         tv_welcome.text = "Welcome " + homeActivity.currentUser?.userName
         btn_start.setOnClickListener {
-            startService()
+            //startService()
+            scheduleJob()
         }
 
         btn_stop.setOnClickListener {
-            stopService()
+            //stopService()
+            cancelJob()
         }
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
             if(ActivityCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED){
-                startService()
+                //startService()
+                scheduleJob()
             }else{
                 requestPermissions(permissionlist,REQUEST_PERMISSION)
             }
@@ -68,13 +77,35 @@ class EmitterFragment : Fragment() {
         }
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ActivityCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-                startService()
+                //startService()
+                scheduleJob()
             }else{
                 requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_PERMISSION)
             }
             return
         }
     }
+
+    private fun scheduleJob(){
+        val mComponentName = ComponentName(context!!, CabScheduler::class.java)
+
+
+        val mJobInfo = JobInfo.Builder(JOB_ID, mComponentName)
+            .setPeriodic(15*60*1000)
+            .setPersisted(true)
+            //.setMinimumLatency(15*60*1000)
+            .build()
+        val resultCode: Int = jobScheduler.schedule(mJobInfo)
+
+        if (resultCode == JobScheduler.RESULT_SUCCESS) Log.d(TAG, "Job Scheduled")
+        else Log.d(TAG, "Job not Scheduled")
+    }
+
+    private fun cancelJob(){
+        jobScheduler?.cancel(JOB_ID)
+    }
+
+
 
     private fun startService() {
         val serviceIntent = Intent(homeActivity, LocationForegroundService::class.java)
@@ -97,7 +128,8 @@ class EmitterFragment : Fragment() {
             REQUEST_PERMISSION -> {
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
                     if(grantResults.isNotEmpty() && grantResults[0]==PackageManager.PERMISSION_GRANTED && grantResults[1]==PackageManager.PERMISSION_GRANTED){
-                        startService()
+                        //startService()
+                        scheduleJob()
                     }else{
                         Toaster.showShort(context!!, "Permission denied")
                     }
@@ -105,7 +137,8 @@ class EmitterFragment : Fragment() {
                 }
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                     if(grantResults.isNotEmpty() && grantResults[0]==PackageManager.PERMISSION_GRANTED){
-                        startService()
+                        //startService()
+                        scheduleJob()
                     }else{
                         Toaster.showShort(context!!, "Permission denied")
                     }
