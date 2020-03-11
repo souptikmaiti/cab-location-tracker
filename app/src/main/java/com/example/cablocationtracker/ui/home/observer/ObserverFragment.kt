@@ -96,9 +96,8 @@ class ObserverFragment : BaseFragment() {
 
                 val targetLocation = LatLng(loc.latitude!!, loc.longitude!!)
 
-                val dateFormat = SimpleDateFormat("dd.MMM.yyyy HH:mm:ss")
                 googleMap?.clear()
-                googleMap?.addMarker(MarkerOptions().position(targetLocation).title(targetUser.userName).snippet(dateFormat.format(loc.currTime!!)))
+                googleMap?.addMarker(MarkerOptions().position(targetLocation).title(targetUser.userName).snippet(loc.currTime!!))
 
                 //val cameraPosition = CameraPosition.Builder().target(targetLocation).zoom(12f).build()
                 //googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))

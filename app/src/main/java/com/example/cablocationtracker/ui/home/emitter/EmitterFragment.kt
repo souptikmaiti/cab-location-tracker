@@ -37,8 +37,10 @@ class EmitterFragment : Fragment() {
         const val REQUEST_PERMISSION = 111
         val TAG = EmitterFragment::class.java.simpleName
         val JOB_ID = 56
+        val REFRESH_INTERVAL: Long = 15*60*1000
     }
     lateinit var jobScheduler: JobScheduler
+    lateinit var jobInfo: JobInfo
     lateinit var homeActivity: HomeActivity
     val permissionlist = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
 
@@ -90,12 +92,20 @@ class EmitterFragment : Fragment() {
         val mComponentName = ComponentName(context!!, CabScheduler::class.java)
 
 
-        val mJobInfo = JobInfo.Builder(JOB_ID, mComponentName)
-            .setPeriodic(15*60*1000)
-            .setPersisted(true)
-            //.setMinimumLatency(15*60*1000)
-            .build()
-        val resultCode: Int = jobScheduler.schedule(mJobInfo)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+            jobInfo = JobInfo.Builder(JOB_ID, mComponentName)
+                //.setPeriodic(15*60*1000)
+                .setPersisted(true)
+                .setMinimumLatency(REFRESH_INTERVAL)
+                .build()
+        }else{
+            jobInfo = JobInfo.Builder(JOB_ID, mComponentName)
+                .setPeriodic(REFRESH_INTERVAL)
+                .setPersisted(true)
+                //.setMinimumLatency(15*60*1000)
+                .build()
+        }
+        val resultCode: Int = jobScheduler.schedule(jobInfo)
 
         if (resultCode == JobScheduler.RESULT_SUCCESS) Log.d(TAG, "Job Scheduled")
         else Log.d(TAG, "Job not Scheduled")

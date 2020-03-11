@@ -10,6 +10,7 @@ import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 
 class CabScheduler: JobService() {
     companion object{
@@ -24,12 +25,13 @@ class CabScheduler: JobService() {
     override fun onStartJob(params: JobParameters?): Boolean {
         Log.d(TAG, "onStartJob")
         val mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        val dateFormat = SimpleDateFormat("dd.MMM.yyyy HH:mm:ss")
         mFusedLocationClient.lastLocation.addOnSuccessListener {
-            val smallLocation = SmallLocation(it.latitude, it.longitude, System.currentTimeMillis())
+            val smallLocation = SmallLocation(it.latitude, it.longitude, dateFormat.format(System.currentTimeMillis()))
             Toaster.showShort(applicationContext, smallLocation.latitude.toString() + ", " + smallLocation.latitude.toString())
             CoroutineScope(Dispatchers.IO).launch {
                 repo.updateLocation(smallLocation)
-                jobFinished(params, false)
+                jobFinished(params, true)
             }
         }
         return true

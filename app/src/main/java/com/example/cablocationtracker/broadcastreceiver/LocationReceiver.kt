@@ -12,6 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
+import java.text.SimpleDateFormat
 
 class LocationReceiver : BroadcastReceiver() {
     companion object{
@@ -43,7 +44,8 @@ class LocationReceiver : BroadcastReceiver() {
     }
 
     private fun updateLocationInFirebase(latitude: Double, longitude: Double) {
-        val locInfo: SmallLocation = SmallLocation(latitude, longitude, System.currentTimeMillis())
+        val dateFormat = SimpleDateFormat("dd.MMM.yyyy HH:mm:ss")
+        val locInfo: SmallLocation = SmallLocation(latitude, longitude, dateFormat.format(System.currentTimeMillis()))
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 if(!waitFlag){
